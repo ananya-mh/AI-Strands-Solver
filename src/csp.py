@@ -1,3 +1,6 @@
+import sys
+sys.setrecursionlimit(1000000)
+
 class ExactCoverSolver:
     """
     A simple backtracking CSP solver for the exact cover problem.
