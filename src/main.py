@@ -1,5 +1,6 @@
-from .agent import StrandsAgent
-from .utils import record_solution_json
+from agent import StrandsAgent
+from utils import record_solution_json
+from visualizer import visualize_grid
 
 
 def main():
@@ -35,17 +36,57 @@ def main():
     ans = ["WADINGBIRD", "BITTERN", "SPOONBILL", "FLAMINGO", "EGRET", "STORK", "IBIS"]
     g2 = spangram2, test2, None
 
+    wp = "Sign Language"
+    spangram3 = "ASTROLOGY"
+    test3 =   [
+          ['S', 'A', 'N', 'N', 'G', 'S'],
+          ['O', 'C', 'W', 'I', 'E', 'U'],
+          ['H', 'P', 'E', 'T', 'O', 'D'],
+          ['A', 'P', 'L', 'I', 'F', 'N'],
+          ['E', 'I', 'S', 'Z', 'E', 'R'],
+          ['R', 'D', 'A', 'C', 'P', 'P'],
+          ['S', 'L', 'A', 'M', 'E', 'O'],
+          ['I', 'R', 'A', 'S', 'R', 'P'],
+        ]
+    
+    count3 = 8
+    ans3 = [ "ASTROLOGY","ARCHER",
+    "BULL",
+    "GOAT",
+    "SCALES",
+    "SCORPION",
+    "TWINS",
+    "VIRGIN"
+     ]
+    g3 = spangram3, test3, None
+
+
     # Initialize the Strands agent.
     # You can optionally pass a path to a dictionary file; otherwise, a default list is used.
     agent = StrandsAgent(g2, dictionary_file="words_dictionary.json", verbose=True)
+    # found_words = agent.solve()
+    
+#     print("Found words:")
+#     for word in sorted(found_words):
+#         print(word)
+    
+#     if found_words:
+#         record_solution_json(found_words, f"{g2[0]}.json")
+        
+#         # Add these 2 lines for visualization (with dummy paths)
+#         dummy_paths = [([(0,0)] * len(w)) for w in found_words]  # Replace with real paths if available
+#         visualize_grid(test3, list(zip(found_words, dummy_paths)), title=g2[0])
 
+# if __name__ == "__main__":
+#     main()
+    
     # Solve the grid and print the found words.
     found_words = agent.solve()
     print("Found words:")
     for word in sorted(found_words):
         print(word)
-    if found_words:
-        record_solution_json(found_words, f"{g1[0]}.json")
+    # if found_words:
+    #     record_solution_json(found_words, f"{g2[0]}.json")
 
 
 if __name__ == "__main__":

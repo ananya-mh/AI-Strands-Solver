@@ -84,7 +84,7 @@ def rank_candidates(
         # overall_score = weight_sim * sim + weight_freq * freq
         ranked.append((candidate, positions, overall_score))
 
-        if verbose:
-            print(f"\t{candidate}: {overall_score}")
+        # if verbose:
+        #     print(f"\t{candidate}: {overall_score}")
     ranked.sort(key=lambda x: x[2], reverse=True)
     return ranked

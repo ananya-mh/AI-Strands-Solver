@@ -1,8 +1,11 @@
 import json
-from .dictionary import Dictionary
-from .dfs import find_words_with_positions
-from .csp import ExactCoverSolver
-from .ranking import rank_candidates
+import time
+from dictionary import Dictionary
+from dfs import find_words_with_positions
+# from beam import find_words_with_positions
+from csp import ExactCoverSolver
+from ranking import rank_candidates
+from dlx import DLXSolver
 
 
 class StrandsAgent:
@@ -13,7 +16,7 @@ class StrandsAgent:
         Parameters:
             grid (list[list[str]]): A 2D list representing the 6x8 letter grid.
             dictionary_file (str, optional): Path to a file containing dictionary words.
-                                             Supports JSON files (e.g., words_dictionary.json)
+                                             Supports JSON files (e.g., words_dictionary.json) 
                                              or plain text files (one word per line).
         """
         self.theme, self.grid, self.word_count = game
@@ -38,9 +41,11 @@ class StrandsAgent:
             try:
                 if dictionary_file.endswith(".json"):
                     with open(dictionary_file, "r") as f:
-                        json_dict = json.load(f)
+                        # json_dict = json.load(f)
+                        # print(f"✅ Successfully loaded {len(json_dict)} words!")
                         # Use the keys of the JSON dictionary as the word list.
-                        words = list(json_dict.keys())
+                        words = list(json.load(f).keys())
+                        print(f"✅ Successfully loaded {len(words)} words!")
                 else:
                     with open(dictionary_file, "r") as f:
                         words = [line.strip().lower() for line in f if line.strip()]
@@ -86,7 +91,7 @@ class StrandsAgent:
             weight_freq=0,
             verbose=True,
         )
-        print(ranked[:100])
+        # print(ranked[:100])
 
         # Create the CSP solver instance for a 6x8 grid.
         solver = ExactCoverSolver(
@@ -95,7 +100,19 @@ class StrandsAgent:
             grid_cols=len(self.grid[0]),
             target_word_count=self.word_count,
         )
+
+        # Solve with DLX
+        # solver = DLXSolver(
+        #     candidates=ranked,
+        #     grid_rows=len(self.grid),
+        #     grid_cols=len(self.grid[0]),
+        #     target_word_count=self.word_count
+        # )
+
         if self.verbose:
+            start = time.time()
             print("Solving...")
         solution = solver.solve()
+        elapsed = time.time() - start
+        print(elapsed)
         return solution

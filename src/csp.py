@@ -10,7 +10,8 @@ class ExactCoverSolver:
     """
 
     def __init__(self, candidates, grid_rows, grid_cols, target_word_count=None):
-        self.candidates = candidates
+        # self.candidates = candidates
+        self.candidates = sorted(candidates, key=lambda x: -x[2])
         self.grid_rows = grid_rows
         self.grid_cols = grid_cols
         self.grid_size = grid_rows * grid_cols
