@@ -38,16 +38,14 @@ def main():
 
     wp = "Sign Language"
     spangram3 = "ASTROLOGY"
-    test3 =   [
-          ['S', 'A', 'N', 'N', 'G', 'S'],
-          ['O', 'C', 'W', 'I', 'E', 'U'],
-          ['H', 'P', 'E', 'T', 'O', 'D'],
-          ['A', 'P', 'L', 'I', 'F', 'N'],
-          ['E', 'I', 'S', 'Z', 'E', 'R'],
-          ['R', 'D', 'A', 'C', 'P', 'P'],
-          ['S', 'L', 'A', 'M', 'E', 'O'],
-          ['I', 'R', 'A', 'S', 'R', 'P'],
-        ]
+    test3 =   [['R', 'G', 'I', 'Y', 'B', 'U'],
+               ['I', 'S', 'N', 'G', 'L', 'L'],
+               ['V', 'A', 'C', 'O', 'A', 'C'],
+               ['L', 'E', 'S', 'L', 'R', 'H'],
+               ['P', 'I', 'R', 'O', 'T', 'E'],
+               ['R', 'O', 'T', 'I', 'W', 'R'],
+               ['O', 'N', 'S', 'G', 'N', 'S'],
+               ['C', 'S', 'A', 'O', 'A', 'T']]
     
     count3 = 8
     ans3 = [ "ASTROLOGY","ARCHER",

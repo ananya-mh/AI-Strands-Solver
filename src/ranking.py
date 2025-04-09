@@ -5,7 +5,10 @@ from wordfreq import word_frequency
 
 # Load a sentence-transformer model for context-dependent semantic similarity.
 # Models like 'all-mpnet-base-v2' produce high-quality sentence embeddings.
-sentence_model = SentenceTransformer("all-mpnet-base-v2")
+
+# sentence_model = SentenceTransformer("all-mpnet-base-v2")
+sentence_model = SentenceTransformer("all-MiniLM-L6-v2")
+
 
 # Load a fill-mask pipeline (e.g., using BERT) for LM likelihood scoring.
 fill_mask = pipeline("fill-mask", model="bert-base-uncased", framework="pt")

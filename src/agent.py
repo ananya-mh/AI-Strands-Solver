@@ -3,6 +3,7 @@ import time
 from dictionary import Dictionary
 from dfs import find_words_with_positions
 # from beam import find_words_with_positions
+from genetic import GeneticStrandsSolver
 from csp import ExactCoverSolver
 from ranking import rank_candidates
 from dlx import DLXSolver
@@ -77,12 +78,19 @@ class StrandsAgent:
                           or None if no solution is found.
         """
         # Generate candidate words with positions.
-
+        
         candidates = self.find_words_with_positions()
+        with open("candidates.txt", 'w') as file:
+            for candidate, positions in candidates:
+                # Write each candidate with its positions, formatted as a string
+                positions_str = ', '.join([f"({pos[0]}, {pos[1]})" for pos in positions])
+                file.write(f"{candidate}: {positions_str}\n")
 
         if self.verbose:
             print(f"\tNumber of candidates found: {len(candidates)}")
             print("Ranking...")
+            start = time.time()
+
         ranked = rank_candidates(
             candidates,
             self.theme,
@@ -91,6 +99,8 @@ class StrandsAgent:
             weight_freq=0,
             verbose=True,
         )
+        
+        print((time.time()-start))
         # print(ranked[:100])
 
         # Create the CSP solver instance for a 6x8 grid.

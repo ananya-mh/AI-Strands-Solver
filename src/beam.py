@@ -1,4 +1,5 @@
 from heapq import heappush, heappop
+import time
 
 def find_words_with_positions(grid, dictionary, max_length=16, min_length=4, beam_width=200):
     """
@@ -22,7 +23,7 @@ def find_words_with_positions(grid, dictionary, max_length=16, min_length=4, bea
         # Example: Give higher scores to prefixes in bird-related terms.
         bird_prefixes = {"bir", "fla", "wad", "egr", "spo"}
         return 1.0 if any(word.startswith(p) for p in bird_prefixes) else 0.0
-
+    start = time.time()
     for start_r in range(rows):
         for start_c in range(cols):
             # Priority queue: (-score, word, path, visited)
@@ -59,5 +60,5 @@ def find_words_with_positions(grid, dictionary, max_length=16, min_length=4, bea
                                     heappush(next_beam, (-new_score, new_word, new_path, new_visited))
 
                 beam = next_beam
-
+    print((time.time() - start))
     return found_words

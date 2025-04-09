@@ -1,3 +1,6 @@
+import time
+
+
 def find_words_with_positions(grid, dictionary, max_length=16, min_length=4):
     """
     Perform DFS from every cell in the grid to find valid words along with their positions.
@@ -34,6 +37,7 @@ def find_words_with_positions(grid, dictionary, max_length=16, min_length=4):
             found_words.append((current_word, path))
 
         # Explore all 8 adjacent cells.
+        
         for dr in [-1, 0, 1]:
             for dc in [-1, 0, 1]:
                 if dr == 0 and dc == 0:
@@ -54,63 +58,3 @@ def find_words_with_positions(grid, dictionary, max_length=16, min_length=4):
             dfs(r, c, grid[r][c], {(r, c)}, [(r, c)])
 
     return found_words
-
-# def find_words_with_positions(grid, dictionary, max_length=16, min_length=4):
-#     """
-#     Perform DFS from every cell in the grid to find valid words along with their positions.
-
-#     Parameters:
-#         grid (list[list[str]]): A 2D list representing the 6x8 letter grid.
-#         dictionary (Dictionary): A Trie-based dictionary with `is_word` and `has_prefix`.
-#         max_length (int): Maximum allowed word length to prevent excessive recursion.
-#         min_length (int): Minimum word length required.
-
-#     Returns:
-#         list: A list of tuples (word, path), where 'word' is valid, and 'path' contains grid positions.
-#     """
-#     rows, cols = len(grid), len(grid[0])
-#     found_words = []
-#     visited = [[False] * cols for _ in range(rows)]  # Faster than a set
-
-#     def dfs(r, c, node, path, word):
-#         """
-#         Depth-first search exploring valid words in the Trie.
-
-#         Parameters:
-#             r, c: Current grid position.
-#             node: Current TrieNode.
-#             path: List of visited positions.
-#             word: The accumulated word.
-#         """
-#         if node.is_word and len(word) >= min_length:
-#             found_words.append((word, path))
-#             node.is_word = False  # Prevent duplicate words
-
-#         # Stop if word is too long
-#         if len(word) > max_length:
-#             return
-
-#         # Mark as visited
-#         visited[r][c] = True
-
-#         # Explore all 8 directions
-#         for dr, dc in [(-1, -1), (-1, 0), (-1, 1),
-#                        (0, -1),         (0, 1),
-#                        (1, -1), (1, 0), (1, 1)]:
-#             nr, nc = r + dr, c + dc
-#             if 0 <= nr < rows and 0 <= nc < cols and not visited[nr][nc]:
-#                 next_char = grid[nr][nc].lower()
-#                 if next_char in node.children:
-#                     dfs(nr, nc, node.children[next_char], path + [(nr, nc)], word + next_char)
-
-#         # Unmark visited for backtracking
-#         visited[r][c] = False
-
-#     # Start DFS from each grid cell if it exists in the Trie root
-#     for r in range(rows):
-#         for c in range(cols):
-#             char = grid[r][c].lower()
-#             if char in dictionary.root.children:
-#                 dfs(r, c, dictionary.root.children[char], [(r, c)], char)
-
-#     return found_words
