@@ -87,15 +87,12 @@ agent = StrandsAgent((spangram, grid, None), dictionary_file="words_dictionary.j
 words = agent.solve()
 found_words = [(word, find_word_positions(grid, word)) for word in words]
 
-def draw_grid():
-    # Collect coordinates by word with distinct color
+def draw_grid(words_to_draw):
     coord_color_map = {}
-    for idx, item in enumerate(found_words):
-        if isinstance(item, tuple) and len(item) == 2:
-            _, coords = item
-            color = COLORS[idx % len(COLORS)]
-            for coord in coords:
-                coord_color_map[coord] = color
+    for idx, (word, coords) in enumerate(words_to_draw):
+        color = COLORS[idx % len(COLORS)]
+        for coord in coords:
+            coord_color_map[coord] = color
 
     for row in range(GRID_ROWS):
         for col in range(GRID_COLS):
@@ -109,6 +106,7 @@ def draw_grid():
             text = FONT.render(letter, True, BLACK)
             text_rect = text.get_rect(center=(x + CELL_SIZE // 2, y + CELL_SIZE // 2))
             screen.blit(text, text_rect)
+
 
 def draw_info():
     theme_text = SMALL_FONT.render(f"Theme: {theme}", True, WHITE)
@@ -129,18 +127,50 @@ def draw_info():
 
 
 def main():
+    clock = pygame.time.Clock()
     running = True
+    current_word_index = 0
+    current_char_index = 0
+    animation_timer = 0
+    animation_delay = 200  # milliseconds between each character
+
     while running:
         screen.fill(BG)
-        draw_grid()
+
+        # Compute how many characters should be shown for each word
+        animated_found_words = []
+        for idx, (word, coords) in enumerate(found_words):
+            if idx < current_word_index:
+                animated_found_words.append((word, coords))
+            elif idx == current_word_index:
+                animated_found_words.append((word, coords[:current_char_index]))
+                break
+            else:
+                break
+
+        draw_grid(animated_found_words)
         draw_info()
         pygame.display.flip()
+
+        animation_timer += clock.get_time()
+        if animation_timer >= animation_delay:
+            animation_timer = 0
+            if current_word_index < len(found_words):
+                word, coords = found_words[current_word_index]
+                if current_char_index < len(coords):
+                    current_char_index += 1
+                else:
+                    current_word_index += 1
+                    current_char_index = 0
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
+        clock.tick(60)
+
     pygame.quit()
+
 
 
 if __name__ == "__main__":

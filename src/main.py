@@ -1,5 +1,5 @@
 import pygame
-from .agent import StrandsAgent
+from agent import StrandsAgent
 
 # Initialize Pygame
 pygame.init()
