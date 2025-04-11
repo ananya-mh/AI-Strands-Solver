@@ -1,8 +1,8 @@
 import json
-from .dictionary import Dictionary
-from .dfs import find_words_with_positions
-from .csp import ExactCoverSolver
-from .ranking import rank_candidates
+from dictionary import Dictionary
+from dfs import find_words_with_positions
+from csp import ExactCoverSolver
+from ranking import rank_candidates
 
 
 class StrandsAgent:
