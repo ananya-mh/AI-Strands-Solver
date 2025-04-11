@@ -89,7 +89,7 @@ class StrandsAgent:
         if self.verbose:
             print(f"\tNumber of candidates found: {len(candidates)}")
             print("Ranking...")
-            start = time.time()
+        start = time.time()
 
         ranked = rank_candidates(
             candidates,
