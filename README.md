@@ -47,7 +47,7 @@ In addition to the primary approach, alternative methods such as **Dancing Links
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-username/strands-word-puzzle-solver.git
+    git clone https://github.com/ananya-mh/AI-Strands-Solver.git
     ```
 
 2. Navigate to the project directory:
