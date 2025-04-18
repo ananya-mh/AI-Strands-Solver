@@ -1,3 +1,5 @@
+#This file was used for Genetic based comparison
+
 import random
 
 class GeneticStrandsSolver:
@@ -14,7 +16,7 @@ class GeneticStrandsSolver:
         for idx in chromosome:
             word, positions, s = self.candidates[idx]
             if any(p in used_cells for p in positions):
-                return 0  # invalid if overlapping
+                return 0 
             used_cells.update(positions)
             score += s
         if len(used_cells) != self.grid_size:
@@ -23,22 +25,20 @@ class GeneticStrandsSolver:
 
     def mutate(self, chromosome):
         if not chromosome:
-            return chromosome  # Return unchanged if chromosome is empty
+            return chromosome 
         new_chrom = chromosome[:]
         if random.random() < self.mutation_rate:
-            i = random.randint(0, len(new_chrom) - 1) if len(new_chrom) > 0 else 0  # Ensure i is valid
-            j = random.randint(0, len(self.candidates) - 1) if len(self.candidates) > 0 else 0  # Ensure j is valid
+            i = random.randint(0, len(new_chrom) - 1) if len(new_chrom) > 0 else 0 
+            j = random.randint(0, len(self.candidates) - 1) if len(self.candidates) > 0 else 0  
             new_chrom[i] = j
         return new_chrom
 
 
     def crossover(self, parent1, parent2):
-        # Ensure both parents have more than one element before performing crossover
         if len(parent1) > 1 and len(parent2) > 1:
             cut = random.randint(1, min(len(parent1), len(parent2)) - 1)
             child = parent1[:cut] + [i for i in parent2 if i not in parent1[:cut]]
         else:
-            # If one parent has only one element, we can't perform a crossover, so we just return one of the parents
             child = parent1[:]
         return child
 
@@ -69,7 +69,7 @@ class GeneticStrandsSolver:
                 best_solution = scored_population[0][0]
                 best_score = scored_population[0][1]
 
-            next_gen = [scored_population[0][0]]  # elitism: keep best
+            next_gen = [scored_population[0][0]]  
             while len(next_gen) < self.population_size:
                 parents = random.choices(scored_population[:20], k=2)
                 child = self.crossover(parents[0][0], parents[1][0])

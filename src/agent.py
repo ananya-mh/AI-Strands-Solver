@@ -1,3 +1,4 @@
+#Main agent file that is used to solve the Strands Puzzle
 import json
 from dictionary import Dictionary
 from dfs import find_words_with_positions

@@ -1,3 +1,5 @@
+#Use of Llama as an alternative transformer.
+
 from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 from huggingface_hub import login
 import torch

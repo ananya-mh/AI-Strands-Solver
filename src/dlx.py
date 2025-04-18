@@ -1,9 +1,11 @@
+#This file was used for dlx based comparison
+
 class DLXNode:
     def __init__(self):
         self.left = self.right = self.up = self.down = self
         self.column = None
         self.row_id = -1
-        self.row_count = 0  # Added row_count for column headers
+        self.row_count = 0  
 
 class DLXSolver:
     def __init__(self, candidates, grid_rows, grid_cols, target_word_count=None):
@@ -12,41 +14,36 @@ class DLXSolver:
         self.grid_cols = grid_cols
         self.grid_size = grid_rows * grid_cols
         self.target_word_count = target_word_count
-        # self.candidates = candidates  # Store candidates for solution mapping
         self.header = self.create_matrix()
         self.solution = []
-        self.solution_nodes = []  # Sort by score descending
+        self.solution_nodes = []  
 
     def create_matrix(self):
-        # Create header node
         header = DLXNode()
         columns = [header]
         
-        # Create column headers for each grid cell
         for i in range(self.grid_size):
             col = DLXNode()
-            col.row_id = i  # Column ID corresponds to grid cell
+            col.row_id = i  
             columns.append(col)
             col.left = columns[-2]
             col.right = header
             columns[-2].right = col
             header.left = col
-            col.column = col  # Column header points to itself
-            col.row_count = 0  # Initialize row count for column
+            col.column = col 
+            col.row_count = 0  
         
-        # Add rows for each candidate word
         for idx, (word, positions, _) in enumerate(self.candidates):
             first_node = None
             for pos in positions:
                 r, c = pos
                 cell_num = r * self.grid_cols + c
-                col = columns[cell_num + 1]  # +1 to skip header
+                col = columns[cell_num + 1]  
                 
                 node = DLXNode()
                 node.column = col
-                node.row_id = idx  # Store candidate index
+                node.row_id = idx 
                 
-                # Link to other nodes in the same row
                 if first_node:
                     node.left = first_node.left
                     node.right = first_node
@@ -55,21 +52,18 @@ class DLXSolver:
                 else:
                     first_node = node
                 
-                # Link to column
                 node.up = col.up
                 node.down = col
                 col.up.down = node
                 col.up = node
-                col.row_count += 1  # Increment column row count
+                col.row_count += 1  
         
         return header
 
     def cover(self, col):
-        # Remove column from header list
         col.right.left = col.left
         col.left.right = col.right
         
-        # Remove all rows in this column from other columns they appear in
         row_node = col.down
         while row_node != col:
             right_node = row_node.right
@@ -81,7 +75,6 @@ class DLXSolver:
             row_node = row_node.down
 
     def uncover(self, col):
-        # Reconnect all rows in this column to other columns
         row_node = col.up
         while row_node != col:
             left_node = row_node.left
@@ -92,7 +85,6 @@ class DLXSolver:
                 left_node = left_node.left
             row_node = row_node.up
         
-        # Reconnect column to header list
         col.right.left = col
         col.left.right = col
 
@@ -117,7 +109,6 @@ class DLXSolver:
         while row_node != col:
             self.solution_nodes.append(row_node)
             
-            # Cover all columns this row intersects with
             right_node = row_node.right
             while right_node != row_node:
                 self.cover(right_node.column)
@@ -126,7 +117,6 @@ class DLXSolver:
             if self.search(k + 1):
                 return True
                 
-            # Backtrack
             self.solution_nodes.pop()
             left_node = row_node.left
             while left_node != row_node:
@@ -141,7 +131,6 @@ class DLXSolver:
     def solve(self):
         print("dlx searching..")
         if self.search(0):
-            # Convert node pointers back to original candidates
             solution_indices = {node.row_id for node in self.solution_nodes}
             return [self.candidates[i] for i in solution_indices]
         return None

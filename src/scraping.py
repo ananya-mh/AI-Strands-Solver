@@ -1,8 +1,9 @@
+#This file was used to scrape previous data from an online repo we found.
+
 import requests
 import datetime
 import pandas as pd
 
-# Start and end dates
 start_date = datetime.date(2024, 3, 4)
 end_date = datetime.date.today()
 
@@ -38,7 +39,6 @@ while current_date <= end_date:
 
     current_date += datetime.timedelta(days=1)
 
-# Convert to DataFrame and save as CSV
 df = pd.DataFrame(all_data)
 df.to_csv("strands_data.csv", index=False)
 

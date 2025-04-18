@@ -1,16 +1,11 @@
+#This file saves the solution as a json file.
+
 import json
 import os
 
 
 def record_solution_json(solution, filename="solution.json"):
-    """
-    Write the solution to a JSON file.
 
-    Parameters:
-        solution (list): List of tuples (word, positions, score).
-        filename (str): File name to store the JSON.
-    """
-    # Convert tuples to dicts for clarity.
 
     output_dir = "out"
     os.makedirs(output_dir, exist_ok=True)
