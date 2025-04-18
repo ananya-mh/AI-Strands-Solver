@@ -180,6 +180,6 @@ def rank_candidates(
         ranked.append((candidate, positions, overall_score))
 
         # if verbose:
-        #     print(f"\t{candidate}: {overall_score}")
+            # print(f"\t{candidate}: {overall_score}")
     ranked.sort(key=lambda x: x[2], reverse=True)
     return ranked
