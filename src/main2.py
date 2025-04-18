@@ -8,8 +8,6 @@ from utils import record_solution_json
 from visualizer import draw_grid_with_words
 
 
-
-
 def main():
     theme = "grrr"
     spangram = "CROSSWORD"
